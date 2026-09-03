@@ -8,7 +8,7 @@ format:
     chalkboard: true
     navigation-mode: linear
     center: false
-    auto-stretch: false
+    auto-stretch: true
     css: styles.css
 ---
 
@@ -46,14 +46,14 @@ format:
   
 
 # The Pedagogical Challenge {background-color="#cbd5e1"}
-
+                                                                                                                                                                                
 ## Why Novice Writers Struggle with Genre?
 
 Novice and L2 academic writers often struggle to replicate the rhetorical expectations of research genres.
 
 - Students know they need to "provide background," but miss **how** it is done and what counts as appropriate presentation of background in academic writing
-- Rhetorical moves are often **implicit** and discipline-specific.
-- Traditional margin comments (*"needs better flow"*, *"show your contribution"*) can be opaque for students
+- Rhetorical moves are often **implicit** and the ordering can be discipline-specific.
+- Explicit instruction and demonstration have been shown to benefit rhetorical strategies (Flowerdew 2000; Cheng 2007; 2008)
 - Limited exposure to discourse / narrative in STEM disciplines
 
 ## What is Move-Step Analysis?
@@ -129,70 +129,87 @@ Previous studies (e.g., Swales, 1990; Cotos et al., 2017) have highlighted the r
 
 # Introducing MoveStepViz {background-color="#cbd5e1"}
 
-## MoveStepViz (v0.2.2)
+## MoveStepViz
 
 A pedagogical visualization toolkit designed for language educators, students, and corpus linguists.
 
 ::: {.columns}
 ::: {.column width="50%"}
-### No-Code Web Application
-* Zero technical barrier for teachers and students.
-* Interactive exploration of reference corpora.
-* Drag-and-drop custom text upload.
-* Instant visual side-by-side comparisons.
+### Python Package (`movestepviz` v0.2.3)
+* Open-source on PyPI
+* Generates publication-ready DNA-strip diagrams.
+* Pre-loaded with frequently-used rhetorical schemes (CARS, DRaC).
+* Fully customizable colours, labels, and layouts.
 :::
 
 ::: {.column width="50%"}
-### Python Package (`movestepviz`)
-* Open-source on PyPI (`pip install movestepviz`).
-* Generates publication-ready DNA-strip diagrams.
-* Pre-loaded with standard rhetorical schemes.
-* Fully customizable colors, labels, and layouts.
+### Web Interface
+* User-friendly interface for teachers and students
+* Interactive exploration
+* Drag-and-drop custom annotation upload
 :::
 :::
 
 ---
 
-## Anatomy of a Rhetorical DNA Strip
+## Anatomy of Rhetorical Moves and Steps 
 
-Each colored cell represents one functional sentence/clause:
+Similar to a DNA sequence, a row represents a unit containing foundamental elements:  
 
-```text
-┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐  ┌──────┐
-│  1a  │  │  1b  │  │  1c  │  │  2b  │  │  3a  │
-└──────┘  └──────┘  └──────┘  └──────┘  └──────┘
- Move 1    Move 1    Move 1    Move 2    Move 3
- Step 1    Step 2    Step 3    Step 1b   Step 1a
- (Territory)         (Lit)      (Gap)    (Purpose)
-```
+::: {style="text-align: center;"}
+![](eurocall_slides_files/movestepviz01.png){width="65%"}
+:::
 
-* **Color Families**: Each Move has a distinct color (Green = M1, Amber = M2, Blue = M3, Purple = M4, etc.).
-* **Tonal Gradients**: Steps within the same move share shades of the family for intuitive hierarchy.
-* **Readable In-Cell Labels**: Compact labels (e.g. `1a`, `1b`, `2a`, `3a`) maintain visual clarity without clutter.
+* Each Move has a distinct color (Green = M1, Red = M2, etc.)
+* Steps within the same move share shades of the family for intuitive hierarchy
+* Readable In-Cell Labels (e.g. `M1-S1`, `M1-S2`, `M2-S1`, `M3-S1`)
 
 
+::: {.fragment}
+**This provides users an overview of the progression of moves, while keeping track of the exact steps used.**
 
+- Some steps repeat 
+- Some steps are optional
+:::
 
-## Built-In Genre & Section Schemes
-
-MoveStepViz 0.2.2 comes pre-loaded with standard genre models:
+## Pre-loaded Genre & Section Schemes
 
 | Scheme | Research Article Section | Foundational Research |
 | :--- | :--- | :--- |
-| **`Swales2004`** | **Introduction** (CARS Model) | Swales (1990, 2004) |
-| **`Cotos_etal2017`** | **Methods** (DRaC Model) | Cotos, Huffman, & Link (2017) |
-| **`Yang_Allison2003_Results`** | **Results** Section | Yang & Allison (2003) |
-| **`Yang_Allison2003_Discussion`** | **Discussion** Section | Yang & Allison (2003) |
+| **`Swales2004`** | **Introduction** (CARS model) | Swales (1990, 2004) |
+| **`Cotos_etal2017`** | **Methods** (DRaC model) | Cotos, Huffman, & Link (2017) |
+| **`Yang_Allison2003_Results`** | **Results** | Yang & Allison (2003) |
+| **`Yang_Allison2003_Discussion`** | **Discussion** | Yang & Allison (2003) |
 
-| **Custom Schemes** | Any section / genre | Teacher-defined JSON or CSV |
+| **Custom Schemes** | Any user-defined annotation scheme in CSV or JSON |
 
----
+## More Customization
+
+::: {.columns}
+  ::: {.column width="40%"}
+  * Export of figure in various formats (JPG, PNG, SVG) 
+  * Display and labelling options (`M1-S3` vs. `1c` vs. `1.3`)
+  * Custom colour palette to highlight particular moves/steps
+  * Basic statistics of steps (# of texts, # of steps, # of unique steps) 
+  :::
+
+  ::: {.column width="60%"}
+  ![](eurocall_slides_files/movestepviz02.png){width="65%"}
+  :::
+:::
 
 # Web-based Graphical User Interface {background-color="#cbd5e1"}
 
-## 1. More Intuitive Input to MoveStepViz {background-color="#d78aefff"}
-:::: {.columns}
+## More Intuitive Input to MoveStepViz {background-iframe="https://charles-lam.net/movestepviz/" background-interactive="true"}
+iframe="https://charles-lam.net/movestepviz/" background-interactive="true"}
+
+<!-- [charles-lam.net/movestepviz](charles-lam.net/movestepviz) -->
+
+
+<!-- 
+::: {.columns}
 ::: {.column width="60%"}
+
 
 :::
 
@@ -202,14 +219,13 @@ MoveStepViz 0.2.2 comes pre-loaded with standard genre models:
 **add figure**
 :::
 
-::::
-
-
+:::
+ -->
 
 
 # Pedagogical Applications in CALL {background-color="#cbd5e1"}
 
-## 1. Data-Driven Learning (DDL) Discovery {background-color="#d78aefff"}
+## 1. Data-Driven Learning (DDL) & Discovery {background-color="#d78aefff"}
 
 :::: {.columns}
 ::: {.column width="60%"}
@@ -251,7 +267,36 @@ Instead of saying *"your introduction lacks focus"*, teachers point to the missi
 
 ---
 
-## 3. Student Self-Assessment & Peer Review {background-color="#d78aefff"}
+## 3. Interactive Move-Step Analysis Visualizer {background-color="#cfd1cbff"}
+
+### Tool for demonstration and exploration
+
+<https://github.com/charlestklam/movestepviz/>
+
+
+
+
+## 4. Why the Python package when you have the web-interface? 
+
+::: {.columns}
+  ::: {.column width="50%"}
+  ### Automation
+  - 
+  - 
+  - 
+  :::
+
+  ::: {.column width="50%"}
+  ### GenAI Integration
+  - The 
+  - A `skills.md` file is created for AI agents to connect with 
+  - **Next step:** (Semi-)Automated annotation!
+  :::
+:::
+ 
+
+
+## 4. Student Self-Assessment & Peer Review {background-color="#fefeffff"}
 
 ::: {.columns}
 ::: {.column width="33%"}
@@ -377,9 +422,15 @@ How domain experts can create bespoke digital humanities tools in the GenAI era:
 
 **References**
 
+  Cheng, A. (2007). Transferring generic features and recontextualizing genre awareness: Understanding writing performance in the ESP genre-based literacy framework. *English for specific purposes, 26*(3), 287-307.
+
+  Cheng, A. (2008). Analyzing genre exemplars in preparation for writing: The case of an L2 graduate student in the ESP genre-based instructional framework of academic literacy. *Applied linguistics, 29*(1), 50-71.
+
   Cotos, E., Huffman, T., & Link, S. (2017). *Research article abstracts as genre-specific texts: The generic-specific analysis (GSA)*. English for Specific Purposes, 46, 50-63. 
 
   Dudley-Evans, T., & St John, M. J. (1998). *Developments in English for specific purposes: A cross-curricular approach*. Cambridge University Press. 
+
+  Flowerdew, L. (2000). Using a genre-based framework to teach organizational structure in academic writing. *ELT journal, 54*(4), 369-378.
 
   Swales, J. M. (1990). *Genre analysis: English in academic and research settings*. Cambridge University Press. 
 
