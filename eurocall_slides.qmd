@@ -9,7 +9,11 @@ format:
     navigation-mode: linear
     center: false
     auto-stretch: true
+    link-external-newwindow: true
     css: styles.css
+    include-in-header:
+      text: |
+        <link rel="icon" type="image/png" href="eurocall_slides_files/icon.png">
 ---
 
 ```{=html}
@@ -186,41 +190,30 @@ Similar to a DNA sequence, a row represents a unit containing foundamental eleme
 ## More Customization
 
 ::: {.columns}
-  ::: {.column width="40%"}
+::: {.column width="40%"}
   * Export of figure in various formats (JPG, PNG, SVG) 
   * Display and labelling options (`M1-S3` vs. `1c` vs. `1.3`)
   * Custom colour palette to highlight particular moves/steps
   * Basic statistics of steps (# of texts, # of steps, # of unique steps) 
-  :::
+  * Normalized Width mode (for longer sections)  
 
-  ::: {.column width="60%"}
-  ![](eurocall_slides_files/movestepviz02.png){width="65%"}
-  :::
 :::
 
-# Web-based Graphical User Interface {background-color="#cbd5e1"}
-
-## More Intuitive Input to MoveStepViz {background-iframe="https://charles-lam.net/movestepviz/" background-interactive="true"}
-iframe="https://charles-lam.net/movestepviz/" background-interactive="true"}
-
-<!-- [charles-lam.net/movestepviz](charles-lam.net/movestepviz) -->
-
-
-<!-- 
-::: {.columns}
 ::: {.column width="60%"}
-
-
+  ![](eurocall_slides_files/movestepviz02.png){width="90%"}
+:::
 :::
 
+# More Intuitive Input to MoveStepViz? {background-color="#cbd5e1"}
 
-::: {.column width="40%"}
+## Web-based Graphical User Interface 
+[https://charles-lam.net/movestepviz](https://charles-lam.net/movestepviz){target="_blank"}
 
-**add figure**
-:::
-
-:::
- -->
+<iframe 
+  src="https://charlestklam.github.io/movestepviz/" 
+  style="width: 100%; height: 700px; border: 0.5px solid #94a3b8; border-radius: 8px; background: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);"
+  allow="clipboard-write">
+</iframe>
 
 
 # Pedagogical Applications in CALL {background-color="#cbd5e1"}
