@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoveStepViz - Interactive Rhetorical Move-Step Visualizer</title>
+  <meta name="description" content="Interactive browser-based visualization tool for rhetorical move-step analysis.">
+  <link rel="stylesheet" href="app.css?v=15">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand">
+      <h1 class="brand-title">MoveStepViz: Interactive Rhetorical Move-Step Visualizer</h1>
+    </div>
+    <div class="header-actions">
+      <button class="header-btn" id="btn-reset-defaults" title="Reset all options to default settings">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+          <path d="M3 3v5h5" />
+        </svg>
+        Reset Defaults
+      </button>
+      <a class="header-btn" href="https://github.com/charlestklam/" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path
+            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+        </svg>
+        GitHub
+      </a>
+      <a class="header-btn" href="https://pypi.org/project/movestepviz/" target="_blank" rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m7.5 4.27 9 5.15" />
+          <path
+            d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+          <path d="m3.3 7 8.7 5 8.7-5" />
+          <path d="M12 22V12" />
+        </svg>
+        PyPI
+      </a>
+      <a class="header-btn" href="https://charles-lam.net/presentations/EuroCALL2026/" target="_blank"
+        rel="noopener noreferrer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 3h20" />
+          <path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3" />
+          <path d="m7 21 5-5 5 5" />
+        </svg>
+        EuroCALL2026
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="app-layout">
+
+    <!-- Sidebar Controls -->
+    <aside class="sidebar">
+
+      <!-- Section: Data Input -->
+      <section class="panel-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <polyline points="10 9 9 9 8 9" />
+            </svg>
+            Sequence Data
+          </h2>
+        </div>
+
+        <!-- Sample Presets -->
+        <div class="sample-presets">
+          <span style="font-size: 0.72rem; color: var(--text-muted); align-self: center;">Samples:</span>
+          <button type="button" class="sample-chip" id="sample-single">Single Article (CARS)</button>
+          <button type="button" class="sample-chip" id="sample-multi">Multi-Article Matrix</button>
+          <button type="button" class="sample-chip" id="sample-nl">Number-Letter (1a, 1b)</button>
+        </div>
+
+        <!-- Dropzone File Upload -->
+        <div class="dropzone" id="file-dropzone">
+          <input type="file" id="file-input" accept=".csv,.tsv,.json,.txt" style="display:none;">
+          <div class="dropzone-text">
+            <strong>Click to upload</strong> or drag & drop CSV / JSON
+          </div>
+          <div class="dropzone-sub">Supports long format, wide matrix, and JSON</div>
+        </div>
+
+        <!-- Text Input -->
+        <div class="form-group">
+          <label class="form-label" for="data-input">Paste Data (Python list, CSV, JSON, or lines):</label>
+          <textarea id="data-input" class="data-textarea"
+            placeholder="Paste ['M1-S1', 'M1-S2', 'M2-S1B'] or CSV data here..."></textarea>
+          <div class="data-stats-bar">
+            <span id="detected-format">Format: Auto-detect</span>
+            <span class="status-pill" id="data-status-pill">Ready</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Annotation Scheme -->
+      <section class="panel-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+            Annotation Scheme
+          </h2>
+          <button type="button" class="sample-chip" id="btn-custom-scheme" style="font-size: 0.7rem;">Custom
+            Scheme</button>
+        </div>
+
+        <div class="form-group">
+          <select id="scheme-select" class="form-select">
+            <option value="Swales2004">Swales (2004) - Introduction (Creating a Research Space, CARS)</option>
+            <option value="Cotos_etal2017">Cotos et al. (2017) - Methods (Demonstrating Rigour and Credibility, DRaC)
+            </option>
+            <option value="Yang_Allison2003_Results">Yang & Allison (2003) - Results</option>
+            <option value="Yang_Allison2003_Discussion">Yang & Allison (2003) - Discussion</option>
+            <option value="custom" disabled id="custom-option">Custom Scheme (User defined)</option>
+          </select>
+          <div class="citation-box" id="scheme-citation">
+            Swales, J. M. (1990/2004). Research Genres: Explorations and Applications. Cambridge University Press.
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Labelling Scheme & Visualization Options -->
+      <section class="panel-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+            Display & Labelling Scheme
+          </h2>
+        </div>
+
+        <!-- Labelling Scheme Radio Pills -->
+        <div class="form-group">
+          <label class="form-label">Cell Labelling Mode:</label>
+          <div class="radio-group-pills">
+            <div class="radio-pill">
+              <input type="radio" id="mode-nl" name="labelling-mode" value="number-letter" checked>
+              <label for="mode-nl">
+                1a, 1b, 2b
+                <span class="desc">Number-Letter (Default)</span>
+              </label>
+            </div>
+            <div class="radio-pill">
+              <input type="radio" id="mode-simp" name="labelling-mode" value="simplified">
+              <label for="mode-simp">
+                1.1, 1.2, 2.1
+                <span class="desc">Simplified Decimal</span>
+              </label>
+            </div>
+            <div class="radio-pill">
+              <input type="radio" id="mode-step" name="labelling-mode" value="step-only">
+              <label for="mode-step">
+                S1, S2, S1B
+                <span class="desc">Step Only</span>
+              </label>
+            </div>
+            <div class="radio-pill">
+              <input type="radio" id="mode-orig" name="labelling-mode" value="original">
+              <label for="mode-orig">
+                M1-S1, M2-S1B
+                <span class="desc">Original Raw ID</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Toggles -->
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">Show Cell Labels</span>
+            <span class="toggle-desc">Display Move-Step codes inside rectangle cells</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-show-labels" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">Normalized Width</span>
+            <span class="toggle-desc">Equalize total row lengths across variable sequences</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-normalize">
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">Hierarchical Legend</span>
+            <span class="toggle-desc">Display Move groups (drag-and-drop & snap enabled)</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-legend" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: 0.35rem; margin-bottom: 0.5rem;">
+          <button type="button" class="sample-chip" id="btn-reset-legend" style="font-size: 0.68rem;">Reset Legend
+            Layout</button>
+        </div>
+
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">Chart Title</span>
+            <span class="toggle-desc">Include custom title header</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-title" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="form-group" id="title-input-group" style="margin-top: 0.5rem;">
+          <input type="text" id="custom-title-input" class="form-input" value="Move-Step Analysis"
+            placeholder="Enter chart title...">
+        </div>
+
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <span class="toggle-title">Transparent Background</span>
+            <span class="toggle-desc">Export PNG/SVG with transparent background</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="toggle-transparent" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Sliders -->
+        <div class="range-group">
+          <div class="range-header">
+            <span>Font Size</span>
+            <span id="val-font-size">11px</span>
+          </div>
+          <input type="range" id="slider-font-size" class="form-range" min="8" max="20" value="11">
+        </div>
+
+        <div class="range-group">
+          <div class="range-header">
+            <span>Cell Height</span>
+            <span id="val-cell-height">30px</span>
+          </div>
+          <input type="range" id="slider-cell-height" class="form-range" min="18" max="50" value="30">
+        </div>
+
+        <div class="range-group">
+          <div class="range-header">
+            <span>Cell Spacing / Gap</span>
+            <span id="val-cell-gap">2px</span>
+          </div>
+          <input type="range" id="slider-cell-gap" class="form-range" min="0" max="6" value="2">
+        </div>
+      </section>
+
+      <!-- Section: Color Customization -->
+      <section class="panel-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
+            </svg>
+            Color Palette Overrides
+          </h2>
+          <button type="button" class="sample-chip" id="btn-reset-colors" style="font-size: 0.7rem;">Reset
+            Colors</button>
+        </div>
+        <p style="font-size: 0.72rem; color: var(--text-muted);">Click any color swatch to override with a custom color:
+        </p>
+        <div class="palette-list" id="palette-overrides-list">
+          <!-- Populated dynamically based on active scheme -->
+        </div>
+      </section>
+
+    </aside>
+
+    <!-- Main Visualization Area -->
+    <main class="viz-container">
+
+      <!-- Toolbar with Export Chart on the Right -->
+      <div class="viz-toolbar">
+        <div class="stats-pills">
+          <div class="stat-pill">Articles: <strong id="stat-articles">3</strong></div>
+          <div class="stat-pill">Total Steps: <strong id="stat-total-steps">0</strong></div>
+          <div class="stat-pill">Unique Steps: <strong id="stat-unique-steps">0</strong></div>
+          <div class="stat-pill">Scheme: <strong id="stat-scheme">Swales (2004)</strong></div>
+          <div class="stat-pill" id="stat-mode-pill">Labelling: <strong id="stat-mode">1a, 1b</strong></div>
+        </div>
+
+        <!-- Export Chart Box to the Right -->
+        <div class="export-box-right">
+          <span class="export-box-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Export:
+          </span>
+          <button type="button" class="btn btn-sm btn-primary" id="btn-export-svg"
+            title="Export as scalable vector graphic">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 2 7 12 12 22 7 12 2" />
+              <polyline points="2 17 12 22 22 17" />
+              <polyline points="2 12 12 17 22 12" />
+            </svg>
+            SVG
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" id="btn-export-png"
+            title="Export as 2x high-resolution PNG">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+            </svg>
+            PNG
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" id="btn-export-jpg"
+            title="Export as JPEG image with white background">
+            JPG
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" id="btn-copy-svg"
+            title="Copy SVG source code to clipboard">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Copy SVG
+          </button>
+        </div>
+      </div>
+
+      <!-- Canvas Area -->
+      <div class="canvas-wrapper">
+        <div class="svg-card transparent-bg" id="svg-card">
+          <!-- Unmatched Steps Popup (Right-hand side, below Export boxes) -->
+          <div class="unmatched-steps-popup" id="unmatched-steps-popup" style="display: none;">
+            <div class="unmatched-popup-header">
+              <div class="unmatched-popup-title">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2.2"
+                  style="flex-shrink:0;">
+                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span>Annotated steps not found in selection scheme:</span>
+              </div>
+              <button type="button" class="unmatched-popup-close" id="btn-close-unmatched"
+                title="Dismiss">&times;</button>
+            </div>
+            <div class="unmatched-steps-list" id="unmatched-steps-list"></div>
+          </div>
+
+          <div id="chart-viewport"></div>
+
+          <!-- Floating Canvas Zoom Bar -->
+          <div class="canvas-zoom-bar" id="canvas-zoom-bar">
+            <button type="button" class="zoom-btn" id="btn-zoom-out" title="Zoom Out (Scroll Down)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+            </button>
+            <button type="button" class="zoom-badge-btn" id="btn-zoom-reset"
+              title="Reset Zoom to 100% (Double Click Canvas)">
+              <span id="zoom-level-text">100%</span>
+            </button>
+            <button type="button" class="zoom-btn" id="btn-zoom-in" title="Zoom In (Scroll Up)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sentence Inspector Card -->
+      <div class="inspector-card" id="inspector-card">
+        <div class="inspector-info">
+          <span class="inspector-badge" id="insp-badge" style="background: #2563eb;">Rhetorical Step</span>
+          <div class="inspector-details">
+            <div class="inspector-title" id="insp-title">Select or hover over any Move-Step cell</div>
+            <div class="inspector-sentence" id="insp-sentence">Text segment preview will appear here.</div>
+          </div>
+        </div>
+        <button type="button" class="header-btn" id="insp-copy-btn" style="display:none;">
+          Copy Text
+        </button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Floating Hover Tooltip -->
+  <div class="viz-tooltip" id="viz-tooltip">
+    <div class="tip-header" id="tip-title"></div>
+    <div class="tip-move" id="tip-move"></div>
+    <div class="tip-desc" id="tip-desc"></div>
+    <div class="tip-text" id="tip-text" style="display: none;"></div>
+  </div>
+
+  <!-- Custom Scheme Modal -->
+  <div class="modal-overlay" id="custom-scheme-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Custom Annotation Scheme</h3>
+        <button type="button" class="modal-close" id="modal-close-btn">&times;</button>
+      </div>
+      <p style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+        Format: <code>label_id; move_name; step_name</code> per line.
+      </p>
+      <textarea class="modal-textarea" id="custom-scheme-textarea" placeholder="M1-S1; Move 1: Background; Step 1: Literature Review
+M1-S2; Move 1: Background; Step 2: Contextualizing
+M2-S1; Move 2: Niche; Step 1: Indicating a gap"></textarea>
+      <div style="display: flex; justify-content: flex-end; gap: 0.5rem;">
+        <button type="button" class="btn btn-secondary" id="modal-cancel-btn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="modal-apply-btn">Apply Custom Scheme</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="schemes.js?v=15"></script>
+  <script src="parser.js?v=15"></script>
+  <script src="visualizer.js?v=15"></script>
+  <script>
+    (function () {
+      // Demo Samples
+      const DEMO_SINGLE = `sentence_id,label,text
+1,M1-S1,Discourse analysis is vital in EAP.
+2,M1-S2,Recent studies focus on move analysis.
+3,M1-S3,Swales (2004) proposed the CARS model.
+4,M2-S2,"However, automated sequence visualization remains underexplored."
+5,M2-S3,How can GenAI streamline move-step visualization?
+6,M3-S1A,This paper introduces MoveStepViz.
+7,M3-S2,We present a Python library and web tool.
+8,M3-S3,The remainder of this paper details the implementation.`;
+
+      const DEMO_MULTI = `article_id,step_1,step_2,step_3,step_4,step_5,step_6,step_7,step_8,step_9,step_10
+26643288,M1-S1,M1-S2,M1-S2,M1-S2,M2-S1,M2-S3,M3-S1,M3-S2
+29334235,M1-S2,M1-S2,M1-S3,M1-S4,M2-S2,M2-S4,M3-S2,
+30396608,M1-S1,M1-S2,M1-S2,M1-S3,M1-S3,M1-S3,M1-S3,M2-S3,M3-S1,M3-S3,`;
+
+      const DEMO_NL = `{
+  "Text01": ["1b", "1b", "1c", "1b", "2a", "2b", "1b", "1c", "1c", "1c", "1c", "1c", "1c", "2c", "1c", "1c", "1c", "1c", "1a", "3b", "1c", "1b", "1c", "1c", "3b", "3a"],
+  "Text02": ["1b", "1b", "1b", "2a", "1b", "1b", "1b", "1b", "3b", "3b", "1a", "3c", "1a", "3c"],
+  "Text03": ["1c", "1b", "1b", "1a", "1b", "1b", "1c", "1b", "2b", "2b", "1c", "1c", "1c", "1c", "3a"],
+  "Text04": ["1a", "1b", "1b", "1b", "1c", "1c", "1a", "1c", "1c", "2b", "1c", "1c", "1c", "1c", "3a", "3b"],
+  "Text05": ["1a", "1b", "1a", "1c", "1c", "1c", "1b", "2a", "2a", "1c", "1c", "1c", "2c", "2a", "1b", "1a", "2b", "3b", "3b", "3c", "3c", "3c", "3c"]
+}`;
+
+      // State
+      let currentSequences = [];
+      let currentSchemeKey = 'Swales2004';
+      let customSchemeData = null;
+      let customColors = {};
+      let customLegendPositions = {};
+      let currentSvgElement = null;
+
+      // Canvas Zoom & Pan State
+      let currentZoom = 1.0;
+      let panX = 0;
+      let panY = 0;
+      let isPanningCanvas = false;
+      let panStart = { x: 0, y: 0 };
+      let startPanOffset = { x: 0, y: 0 };
+
+      // Unmatched steps notification state
+      let dismissedUnmatchedSignature = null;
+
+      // DOM Elements
+      const dataInput = document.getElementById('data-input');
+      const schemeSelect = document.getElementById('scheme-select');
+      const schemeCitation = document.getElementById('scheme-citation');
+      const customOption = document.getElementById('custom-option');
+      const fileInput = document.getElementById('file-input');
+      const fileDropzone = document.getElementById('file-dropzone');
+      const detectedFormat = document.getElementById('detected-format');
+      const dataStatusPill = document.getElementById('data-status-pill');
+
+      const toggleShowLabels = document.getElementById('toggle-show-labels');
+      const toggleNormalize = document.getElementById('toggle-normalize');
+      const toggleLegend = document.getElementById('toggle-legend');
+      const toggleTitle = document.getElementById('toggle-title');
+      const titleInputGroup = document.getElementById('title-input-group');
+      const customTitleInput = document.getElementById('custom-title-input');
+      const toggleTransparent = document.getElementById('toggle-transparent');
+
+      const sliderFontSize = document.getElementById('slider-font-size');
+      const valFontSize = document.getElementById('val-font-size');
+      const sliderCellHeight = document.getElementById('slider-cell-height');
+      const valCellHeight = document.getElementById('val-cell-height');
+      const sliderCellGap = document.getElementById('slider-cell-gap');
+      const valCellGap = document.getElementById('val-cell-gap');
+
+      const chartViewport = document.getElementById('chart-viewport');
+      const svgCard = document.getElementById('svg-card');
+      const paletteList = document.getElementById('palette-overrides-list');
+      const tooltip = document.getElementById('viz-tooltip');
+
+      // Inspector DOM
+      const inspBadge = document.getElementById('insp-badge');
+      const inspTitle = document.getElementById('insp-title');
+      const inspSentence = document.getElementById('insp-sentence');
+      const inspCopyBtn = document.getElementById('insp-copy-btn');
+
+      // Stats DOM
+      const statArticles = document.getElementById('stat-articles');
+      const statTotalSteps = document.getElementById('stat-total-steps');
+      const statUniqueSteps = document.getElementById('stat-unique-steps');
+      const statScheme = document.getElementById('stat-scheme');
+      const statMode = document.getElementById('stat-mode');
+
+      function getSelectedLabellingMode() {
+        const checked = document.querySelector('input[name="labelling-mode"]:checked');
+        return checked ? checked.value : 'number-letter';
+      }
+
+      function getActiveScheme() {
+        if (currentSchemeKey === 'custom' && customSchemeData) {
+          return customSchemeData;
+        }
+        return window.PRESET_SCHEMES[currentSchemeKey] || window.PRESET_SCHEMES['Swales2004'];
+      }
+
+      function updateSchemeMetadata() {
+        const scheme = getActiveScheme();
+        schemeCitation.textContent = scheme.citation || scheme.source || '';
+        statScheme.textContent = scheme.source || scheme.key;
+        renderPaletteOverrides();
+      }
+
+      function renderPaletteOverrides() {
+        paletteList.innerHTML = '';
+        const scheme = getActiveScheme();
+        if (!scheme || !scheme.moves) return;
+
+        scheme.moves.forEach(move => {
+          (move.steps || []).forEach(step => {
+            const item = document.createElement('div');
+            item.className = 'palette-item';
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = `${step.id}: ${step.title || step.name}`;
+            nameSpan.title = step.name;
+
+            const colorInput = document.createElement('input');
+            colorInput.type = 'color';
+            colorInput.className = 'palette-color-picker';
+            colorInput.value = customColors[step.id] || step.color || '#9ca3af';
+
+            colorInput.addEventListener('input', (e) => {
+              customColors[step.id] = e.target.value;
+              renderVisualization();
+            });
+
+            item.appendChild(nameSpan);
+            item.appendChild(colorInput);
+            paletteList.appendChild(item);
+          });
+        });
+      }
+
+      function updateDataFromInput() {
+        dismissedUnmatchedSignature = null;
+        const text = dataInput.value.trim();
+        if (!text) {
+          currentSequences = [];
+          detectedFormat.textContent = 'No input';
+          dataStatusPill.textContent = 'Empty';
+          dataStatusPill.className = 'status-pill warn';
+          renderVisualization();
+          return;
+        }
+
+        try {
+          currentSequences = window.MoveStepParser.parseData(text);
+          if (currentSequences.length > 0) {
+            let totalSteps = currentSequences.reduce((acc, s) => acc + s.items.length, 0);
+            detectedFormat.textContent = `${currentSequences.length} article(s), ${totalSteps} total step(s)`;
+            dataStatusPill.textContent = 'Valid';
+            dataStatusPill.className = 'status-pill';
+          } else {
+            detectedFormat.textContent = 'Could not parse sequence';
+            dataStatusPill.textContent = 'Parse error';
+            dataStatusPill.className = 'status-pill warn';
+          }
+        } catch (e) {
+          detectedFormat.textContent = 'Error parsing data';
+          dataStatusPill.textContent = 'Error';
+          dataStatusPill.className = 'status-pill warn';
+        }
+
+        renderVisualization();
+      }
+
+      function renderVisualization() {
+        const scheme = getActiveScheme();
+        const mode = getSelectedLabellingMode();
+
+        const opts = {
+          title: customTitleInput.value.trim() || 'Move-Step Analysis',
+          showTitle: toggleTitle.checked,
+          legend: toggleLegend.checked,
+          labellingScheme: mode,
+          showLabels: toggleShowLabels.checked,
+          normalizeWidth: toggleNormalize.checked,
+          fontSize: parseInt(sliderFontSize.value, 10),
+          cellHeight: parseInt(sliderCellHeight.value, 10),
+          cellGap: parseInt(sliderCellGap.value, 10),
+          customColors: customColors,
+          legendPositions: customLegendPositions,
+          transparent: toggleTransparent.checked,
+          onCellHover: handleCellHover,
+          onCellClick: handleCellClick,
+          onLegendMoved: (moveId, pos) => {
+            customLegendPositions[moveId] = pos;
+          }
+        };
+
+        // Update stats
+        statArticles.textContent = currentSequences.length;
+        const totalSteps = currentSequences.reduce((acc, s) => acc + (s.items ? s.items.length : 0), 0);
+        statTotalSteps.textContent = totalSteps;
+
+        const uniqueStepSet = new Set();
+        currentSequences.forEach(s => {
+          (s.items || []).forEach(it => {
+            const lbl = (it.label || '').trim();
+            if (lbl) uniqueStepSet.add(lbl);
+          });
+        });
+        statUniqueSteps.textContent = uniqueStepSet.size;
+
+        const modeMap = {
+          'number-letter': '1a, 1b',
+          'simplified': '1.1, 1.2',
+          'step-only': 'S1, S2',
+          'original': 'M1-S1'
+        };
+        statMode.textContent = modeMap[mode] || mode;
+
+        if (toggleTransparent.checked) {
+          svgCard.classList.add('transparent-bg');
+        } else {
+          svgCard.classList.remove('transparent-bg');
+        }
+
+        currentSvgElement = window.MoveStepVisualizer.render(chartViewport, currentSequences, scheme, opts);
+        applyCanvasTransform();
+        checkUnmatchedSteps(currentSequences, scheme);
+      }
+
+      function updateInspectorCard(cellData) {
+        if (!cellData) return;
+        inspBadge.textContent = cellData.formattedLabel;
+        inspBadge.style.background = cellData.color;
+        inspBadge.style.color = window.getContrastTextColor(cellData.color);
+
+        inspTitle.textContent = `${cellData.meta.moveName} — ${cellData.meta.stepTitle}`;
+        if (cellData.text) {
+          inspSentence.textContent = `"${cellData.text}"`;
+          inspCopyBtn.style.display = 'inline-flex';
+          inspCopyBtn.onclick = () => {
+            navigator.clipboard.writeText(cellData.text);
+            inspCopyBtn.textContent = 'Copied!';
+            setTimeout(() => { inspCopyBtn.textContent = 'Copy Text'; }, 1500);
+          };
+        } else {
+          inspSentence.textContent = `${cellData.articleId} · Rhetorical Step ${cellData.unitIndex} of ${cellData.totalUnits} · ${cellData.meta.description || 'No raw sentence text provided'}`;
+          inspCopyBtn.style.display = 'none';
+        }
+      }
+
+      function handleCellHover(e, cellData) {
+        if (!cellData || !e) {
+          tooltip.style.display = 'none';
+          return;
+        }
+
+        updateInspectorCard(cellData);
+
+        const tipTitle = document.getElementById('tip-title');
+        const tipMove = document.getElementById('tip-move');
+        const tipDesc = document.getElementById('tip-desc');
+        const tipText = document.getElementById('tip-text');
+
+        tipTitle.textContent = `${cellData.formattedLabel}: ${cellData.meta.stepTitle}`;
+        tipMove.textContent = `${cellData.meta.moveName} · ${cellData.articleId} (Rhetorical Step ${cellData.unitIndex}/${cellData.totalUnits})`;
+        tipDesc.textContent = cellData.meta.description || 'Rhetorical move-step unit.';
+
+        if (cellData.text) {
+          tipText.textContent = `"${cellData.text}"`;
+          tipText.style.display = 'block';
+        } else {
+          tipText.style.display = 'none';
+        }
+
+        tooltip.style.display = 'block';
+
+        // Position tooltip near cursor
+        const pad = 12;
+        let x = e.clientX + pad;
+        let y = e.clientY + pad;
+
+        if (x + 320 > window.innerWidth) {
+          x = e.clientX - 330;
+        }
+        if (y + 160 > window.innerHeight) {
+          y = e.clientY - 170;
+        }
+
+        tooltip.style.left = `${x}px`;
+        tooltip.style.top = `${y}px`;
+      }
+
+      function handleCellClick(cellData) {
+        updateInspectorCard(cellData);
+      }
+
+      // Event Listeners: Sample Buttons
+      document.getElementById('sample-single').addEventListener('click', () => {
+        dataInput.value = DEMO_SINGLE;
+        schemeSelect.value = 'Swales2004';
+        currentSchemeKey = 'Swales2004';
+        updateSchemeMetadata();
+        updateDataFromInput();
+      });
+
+      document.getElementById('sample-multi').addEventListener('click', () => {
+        dataInput.value = DEMO_MULTI;
+        schemeSelect.value = 'Swales2004';
+        currentSchemeKey = 'Swales2004';
+        updateSchemeMetadata();
+        updateDataFromInput();
+      });
+
+      document.getElementById('sample-nl').addEventListener('click', () => {
+        dataInput.value = DEMO_NL;
+        schemeSelect.value = 'Swales2004';
+        currentSchemeKey = 'Swales2004';
+        updateSchemeMetadata();
+        updateDataFromInput();
+      });
+
+      // Text Input change
+      dataInput.addEventListener('input', updateDataFromInput);
+
+      // File Upload
+      fileDropzone.addEventListener('click', () => fileInput.click());
+      fileDropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        fileDropzone.classList.add('dragover');
+      });
+      fileDropzone.addEventListener('dragleave', () => fileDropzone.classList.remove('dragover'));
+      fileDropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        fileDropzone.classList.remove('dragover');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          readFile(e.dataTransfer.files[0]);
+        }
+      });
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          readFile(e.target.files[0]);
+        }
+      });
+
+      function readFile(file) {
+        const reader = new FileReader();
+        reader.onload = function (evt) {
+          dataInput.value = evt.target.result;
+          updateDataFromInput();
+        };
+        reader.readAsText(file);
+      }
+
+      // Scheme Select
+      schemeSelect.addEventListener('change', (e) => {
+        currentSchemeKey = e.target.value;
+        customLegendPositions = {};
+        dismissedUnmatchedSignature = null;
+        updateSchemeMetadata();
+        renderVisualization();
+      });
+
+      // Reset Legend Layout
+      document.getElementById('btn-reset-legend').addEventListener('click', () => {
+        customLegendPositions = {};
+        renderVisualization();
+      });
+
+      // Labelling mode radios
+      document.querySelectorAll('input[name="labelling-mode"]').forEach(radio => {
+        radio.addEventListener('change', renderVisualization);
+      });
+
+      // Toggles
+      toggleShowLabels.addEventListener('change', renderVisualization);
+      toggleNormalize.addEventListener('change', renderVisualization);
+      toggleLegend.addEventListener('change', renderVisualization);
+      toggleTitle.addEventListener('change', () => {
+        titleInputGroup.style.display = toggleTitle.checked ? 'block' : 'none';
+        renderVisualization();
+      });
+      customTitleInput.addEventListener('input', renderVisualization);
+      toggleTransparent.addEventListener('change', renderVisualization);
+
+      // Sliders
+      sliderFontSize.addEventListener('input', (e) => {
+        valFontSize.textContent = `${e.target.value}px`;
+        renderVisualization();
+      });
+      sliderCellHeight.addEventListener('input', (e) => {
+        valCellHeight.textContent = `${e.target.value}px`;
+        renderVisualization();
+      });
+      sliderCellGap.addEventListener('input', (e) => {
+        valCellGap.textContent = `${e.target.value}px`;
+        renderVisualization();
+      });
+
+      // Reset Colors
+      document.getElementById('btn-reset-colors').addEventListener('click', () => {
+        customColors = {};
+        renderPaletteOverrides();
+        renderVisualization();
+      });
+
+      // Reset Defaults
+      document.getElementById('btn-reset-defaults').addEventListener('click', () => {
+        dataInput.value = DEMO_MULTI;
+        document.getElementById('mode-nl').checked = true;
+        toggleShowLabels.checked = true;
+        toggleNormalize.checked = false;
+        toggleLegend.checked = true;
+        toggleTitle.checked = true;
+        titleInputGroup.style.display = 'block';
+        customTitleInput.value = 'Move-Step Analysis';
+        toggleTransparent.checked = true;
+
+        sliderFontSize.value = 11;
+        valFontSize.textContent = '11px';
+        sliderCellHeight.value = 30;
+        valCellHeight.textContent = '30px';
+        sliderCellGap.value = 2;
+        valCellGap.textContent = '2px';
+
+        customColors = {};
+        customLegendPositions = {};
+        currentZoom = 1.0;
+        panX = 0;
+        panY = 0;
+        schemeSelect.value = 'Swales2004';
+        currentSchemeKey = 'Swales2004';
+        updateSchemeMetadata();
+        updateDataFromInput();
+      });
+
+      // Export Buttons
+      document.getElementById('btn-export-svg').addEventListener('click', () => {
+        window.MoveStepVisualizer.exportSVG(currentSvgElement, 'movestep_viz.svg');
+      });
+
+      document.getElementById('btn-export-png').addEventListener('click', () => {
+        window.MoveStepVisualizer.exportRaster(currentSvgElement, 'movestep_viz.png', 'image/png', toggleTransparent.checked);
+      });
+
+      document.getElementById('btn-export-jpg').addEventListener('click', () => {
+        window.MoveStepVisualizer.exportRaster(currentSvgElement, 'movestep_viz.jpg', 'image/jpeg', false);
+      });
+
+      document.getElementById('btn-copy-svg').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-copy-svg');
+        const ok = await window.MoveStepVisualizer.copySVG(currentSvgElement);
+        if (ok) {
+          const oldText = btn.innerHTML;
+          btn.textContent = 'Copied!';
+          setTimeout(() => { btn.innerHTML = oldText; }, 1500);
+        }
+      });
+
+      // Canvas Zoom & Pan Implementation
+      function applyCanvasTransform() {
+        if (!currentSvgElement) return;
+        currentSvgElement.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+        const zoomText = document.getElementById('zoom-level-text');
+        if (zoomText) {
+          zoomText.textContent = `${Math.round(currentZoom * 100)}%`;
+        }
+        if (currentZoom > 1.05) {
+          chartViewport.classList.add('can-pan');
+        } else {
+          chartViewport.classList.remove('can-pan');
+        }
+      }
+
+      function setCanvasZoom(newZoom) {
+        currentZoom = Math.min(4.0, Math.max(0.4, parseFloat(newZoom.toFixed(2))));
+        applyCanvasTransform();
+      }
+
+      document.getElementById('btn-zoom-in').addEventListener('click', () => {
+        setCanvasZoom(currentZoom + 0.25);
+      });
+
+      document.getElementById('btn-zoom-out').addEventListener('click', () => {
+        setCanvasZoom(currentZoom - 0.25);
+      });
+
+      document.getElementById('btn-zoom-reset').addEventListener('click', () => {
+        currentZoom = 1.0;
+        panX = 0;
+        panY = 0;
+        applyCanvasTransform();
+      });
+
+      // Mouse Wheel Zoom within Canvas
+      svgCard.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.15 : -0.15;
+        setCanvasZoom(currentZoom + delta);
+      }, { passive: false });
+
+      // Canvas Background Panning when Zoomed
+      svgCard.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('.step-cell') || e.target.closest('.legend-move-block') || e.target.closest('.canvas-zoom-bar') || e.target.closest('#unmatched-steps-popup')) {
+          return;
+        }
+        if (e.button !== 0) return;
+        isPanningCanvas = true;
+        chartViewport.classList.add('is-panning');
+        panStart = { x: e.clientX, y: e.clientY };
+        startPanOffset = { x: panX, y: panY };
+        svgCard.setPointerCapture(e.pointerId);
+      });
+
+      svgCard.addEventListener('pointermove', (e) => {
+        if (!isPanningCanvas) return;
+        const dx = e.clientX - panStart.x;
+        const dy = e.clientY - panStart.y;
+        panX = startPanOffset.x + dx;
+        panY = startPanOffset.y + dy;
+        applyCanvasTransform();
+      });
+
+      const stopCanvasPan = (e) => {
+        if (!isPanningCanvas) return;
+        isPanningCanvas = false;
+        chartViewport.classList.remove('is-panning');
+        try { svgCard.releasePointerCapture(e.pointerId); } catch (err) { }
+      };
+      svgCard.addEventListener('pointerup', stopCanvasPan);
+      svgCard.addEventListener('pointercancel', stopCanvasPan);
+
+      // Double-click to reset zoom
+      svgCard.addEventListener('dblclick', (e) => {
+        if (e.target.closest('.canvas-zoom-bar') || e.target.closest('.step-cell') || e.target.closest('.legend-move-block') || e.target.closest('#unmatched-steps-popup')) return;
+        currentZoom = 1.0;
+        panX = 0;
+        panY = 0;
+        applyCanvasTransform();
+      });
+
+      // Unmatched Steps Detection & Display
+      function checkUnmatchedSteps(sequences, scheme) {
+        const popup = document.getElementById('unmatched-steps-popup');
+        const listEl = document.getElementById('unmatched-steps-list');
+        if (!popup || !listEl) return;
+
+        if (!sequences || sequences.length === 0 || !scheme || !scheme.moves) {
+          popup.style.display = 'none';
+          return;
+        }
+
+        const recognized = new Set();
+        const addRec = (k) => {
+          if (!k) return;
+          const s = String(k).trim();
+          recognized.add(s);
+          recognized.add(s.toLowerCase());
+          recognized.add(s.toUpperCase());
+          recognized.add(s.replace(/[-_\s]/g, '').toUpperCase());
+        };
+
+        scheme.moves.forEach(m => {
+          const mNum = m.move_number;
+          (m.steps || []).forEach((st, sIdx) => {
+            addRec(st.id);
+            if (window.formatLabelText) {
+              addRec(window.formatLabelText(st.id, 'number-letter'));
+              addRec(window.formatLabelText(st.id, 'simplified'));
+              addRec(window.formatLabelText(st.id, 'step-only'));
+            }
+
+            if (mNum !== undefined && mNum !== null) {
+              const letter = String.fromCharCode(97 + sIdx);
+              addRec(`${mNum}${letter}`);
+              addRec(`${mNum}.${sIdx + 1}`);
+              addRec(`M${mNum}-S${sIdx + 1}`);
+
+              if (st.step_number !== undefined) {
+                addRec(`${mNum}${String(st.step_number).toLowerCase()}`);
+                addRec(`${mNum}.${st.step_number}`);
+              }
+
+              const sMatch = String(st.id).match(/[Ss](\d+)([A-Za-z]*)/);
+              if (sMatch) {
+                const sNum = parseInt(sMatch[1], 10);
+                const subL = sMatch[2].toLowerCase();
+                const sLetter = subL || ((sNum >= 1 && sNum <= 26) ? String.fromCharCode(96 + sNum) : String(sNum));
+                addRec(`${mNum}${sLetter}`);
+                addRec(`${mNum}.${sNum}`);
+                addRec(`M${mNum}-S${sNum}`);
+              }
+            }
+          });
+        });
+
+        if (window.OTHER_COLORS) {
+          Object.keys(window.OTHER_COLORS).forEach(k => addRec(k));
+        }
+
+        const unmatched = [];
+        const seen = new Set();
+        sequences.forEach(seq => {
+          (seq.items || []).forEach(item => {
+            const raw = (item.label || '').trim();
+            if (!raw) return;
+            const clean = raw.replace(/[-_\s]/g, '').toUpperCase();
+            if (!recognized.has(raw) && !recognized.has(clean) && !recognized.has(raw.toUpperCase()) && !recognized.has(raw.toLowerCase())) {
+              if (!seen.has(raw)) {
+                seen.add(raw);
+                unmatched.push(raw);
+              }
+            }
+          });
+        });
+
+        const sig = `${scheme.key || scheme.source || ''}:${unmatched.slice().sort().join(',')}`;
+        if (unmatched.length > 0 && dismissedUnmatchedSignature !== sig) {
+          listEl.innerHTML = '';
+          unmatched.forEach(st => {
+            const chip = document.createElement('span');
+            chip.className = 'unmatched-chip';
+            chip.textContent = st;
+            listEl.appendChild(chip);
+          });
+          popup.style.display = 'block';
+        } else {
+          popup.style.display = 'none';
+        }
+      }
+
+      const btnCloseUnmatched = document.getElementById('btn-close-unmatched');
+      const handleDismissUnmatched = (e) => {
+        if (e) {
+          e.stopPropagation();
+          e.preventDefault();
+        }
+        const scheme = getActiveScheme();
+        const popup = document.getElementById('unmatched-steps-popup');
+        const chips = popup.querySelectorAll('.unmatched-chip');
+        const unmatched = Array.from(chips).map(c => c.textContent);
+        dismissedUnmatchedSignature = `${scheme ? (scheme.key || scheme.source || '') : ''}:${unmatched.slice().sort().join(',')}`;
+        popup.style.display = 'none';
+      };
+      btnCloseUnmatched.addEventListener('click', handleDismissUnmatched);
+      btnCloseUnmatched.addEventListener('pointerdown', (e) => e.stopPropagation());
+
+      // Custom Scheme Modal
+      const customModal = document.getElementById('custom-scheme-modal');
+      const btnCustomScheme = document.getElementById('btn-custom-scheme');
+      const modalCloseBtn = document.getElementById('modal-close-btn');
+      const modalCancelBtn = document.getElementById('modal-cancel-btn');
+      const modalApplyBtn = document.getElementById('modal-apply-btn');
+      const customSchemeTextarea = document.getElementById('custom-scheme-textarea');
+
+      btnCustomScheme.addEventListener('click', () => {
+        customModal.classList.add('open');
+      });
+      modalCloseBtn.addEventListener('click', () => customModal.classList.remove('open'));
+      modalCancelBtn.addEventListener('click', () => customModal.classList.remove('open'));
+
+      modalApplyBtn.addEventListener('click', () => {
+        const content = customSchemeTextarea.value.trim();
+        if (content) {
+          customSchemeData = window.parseCustomScheme(content);
+          customOption.disabled = false;
+          customOption.selected = true;
+          currentSchemeKey = 'custom';
+          customModal.classList.remove('open');
+          updateSchemeMetadata();
+          renderVisualization();
+        }
+      });
+
+      // Initial Boot (Default to Multi-article mode)
+      dataInput.value = DEMO_MULTI;
+      schemeSelect.value = 'Swales2004';
+      currentSchemeKey = 'Swales2004';
+      updateSchemeMetadata();
+      updateDataFromInput();
+
+    })();
+  </script>
+</body>
+
+</html>

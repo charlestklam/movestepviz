@@ -1,0 +1,518 @@
+[{
+  "section": "Introduction",
+  "source": "Swales2004",
+  "citation": "Swales, J. M. (1990/2004). Research Genres: Explorations and Applications. Cambridge University Press.",
+  "moves": [
+    {
+      "move_number": 1,
+      "move_id": "M1",
+      "move_title": "Establishing a territory",
+      "steps": [
+        {
+          "step_id": "M1-S1",
+          "step_number": "1",
+          "step_title": "Claiming centrality",
+          "description": "Appealing to the discourse community that the research topic is relevant, important, lively, or well-established.",
+          "optional": false
+        },
+        {
+          "step_id": "M1-S2",
+          "step_number": "2",
+          "step_title": "Making topic generalizations",
+          "description": "Providing general statements about current knowledge, practice, or phenomena in the field.",
+          "optional": false
+        },
+        {
+          "step_id": "M1-S3",
+          "step_number": "3",
+          "step_title": "Reviewing items of previous research",
+          "description": "Synthesizing and citing previous research findings, theories, or empirical contributions.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 2,
+      "move_id": "M2",
+      "move_title": "Establishing a niche",
+      "steps": [
+        {
+          "step_id": "M2-S1",
+          "step_number": "1",
+          "step_title": "Counter-claiming",
+          "description": "Refuting or challenging existing research or established opinions in the field.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S2",
+          "step_number": "2",
+          "step_title": "Indicating a gap",
+          "description": "Highlighting an unresolved issue, missing perspective, or limitation in existing literature.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S3",
+          "step_number": "3",
+          "step_title": "Question-raising",
+          "description": "Posing explicit research questions or hypotheses that require further investigation.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S4",
+          "step_number": "4",
+          "step_title": "Continuing a tradition",
+          "description": "Extending prior work by applying existing theories or methods to new contexts.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 3,
+      "move_id": "M3",
+      "move_title": "Occupying the niche",
+      "steps": [
+        {
+          "step_id": "M3-S1A",
+          "step_number": "1A",
+          "step_title": "Outlining purposes",
+          "description": "Stating the primary aim, objectives, or goals of the present study.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S1B",
+          "step_number": "1B",
+          "step_title": "Announcing present research",
+          "description": "Describing the main features, scope, or design of the current study.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S2",
+          "step_number": "2",
+          "step_title": "Announcing principal findings",
+          "description": "Summarizing the central results or main empirical outcomes of the study.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S3",
+          "step_number": "3",
+          "step_title": "Indicating RA structure",
+          "description": "Outlining how the remainder of the research article is organized section by section.",
+          "optional": false
+        }
+      ]
+    }
+  ]
+},
+{
+  "section": "Methods",
+  "source": "Cotos_etal2017",
+  "citation": "Cotos, E., Huffman, S., & Link, S. (2017). A Move/Step model for Methods sections: Demonstrating rigour and credibility. English for Specific Purposes, 46, 90-106.",
+  "moves": [
+    {
+      "move_number": 1,
+      "move_id": "M1",
+      "move_title": "Contextualizing Study Methods",
+      "steps": [
+        {
+          "step_id": "M1-S1",
+          "step_number": "1",
+          "step_title": "Referencing previous works",
+          "description": "Citing methodological precedents, frameworks, or established protocols from literature.",
+          "optional": false
+        },
+        {
+          "step_id": "M1-S2",
+          "step_number": "2",
+          "step_title": "Providing general information",
+          "description": "Giving background context about the research site, domain, or general methodological framework.",
+          "optional": false
+        },
+        {
+          "step_id": "M1-S3",
+          "step_number": "3",
+          "step_title": "Identifying methodological approach",
+          "description": "Specifying the overall research design or paradigm (e.g. qualitative content analysis, randomized trial).",
+          "optional": false
+        },
+        {
+          "step_id": "M1-S4",
+          "step_number": "4",
+          "step_title": "Describing the setting",
+          "description": "Detailing the physical, temporal, organizational, or geographical context where research took place.",
+          "optional": false
+        },
+        {
+          "step_id": "M1-S5",
+          "step_number": "5",
+          "step_title": "Introducing the subjects",
+          "description": "Describing human participants, animal models, or sampling units included in the study.",
+          "optional": false
+        },
+        {
+          "step_id": "M1-S6",
+          "step_number": "6",
+          "step_title": "Rationalizing pre-experiment decisions",
+          "description": "Justifying choices made regarding study design, sampling strategy, or ethical approvals prior to data collection.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 2,
+      "move_id": "M2",
+      "move_title": "Describing the study",
+      "steps": [
+        {
+          "step_id": "M2-S1",
+          "step_number": "1",
+          "step_title": "Acquiring the data",
+          "description": "Explaining the data collection procedures, interviews, surveys, or experimental measurements.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S2",
+          "step_number": "2",
+          "step_title": "Describing the data",
+          "description": "Detailing data formats, corpus sizes, response rates, or dataset characteristics.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S3",
+          "step_number": "3",
+          "step_title": "Delineating experimental/study procedures",
+          "description": "Outlining chronological steps, operational tasks, or protocols followed during execution.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S4",
+          "step_number": "4",
+          "step_title": "Describing tools",
+          "description": "Identifying software, hardware instruments, questionnaires, or apparatus utilized.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S5",
+          "step_number": "5",
+          "step_title": "Identifying variables",
+          "description": "Specifying independent/dependent variables, themes, phenomena, or concepts measured.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S6",
+          "step_number": "6",
+          "step_title": "Rationalizing experiment decisions",
+          "description": "Justifying adjustments, operational parameters, or criteria applied during study execution.",
+          "optional": false
+        },
+        {
+          "step_id": "M2-S7",
+          "step_number": "7",
+          "step_title": "Reporting incrementals",
+          "description": "Noting intermediate steps, preliminary trials, or phase-by-phase developments.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 3,
+      "move_id": "M3",
+      "move_title": "Establishing credibility",
+      "steps": [
+        {
+          "step_id": "M3-S1",
+          "step_number": "1",
+          "step_title": "Preparing the data",
+          "description": "Describing data cleaning, transcription, filtering, coding preparation, or normalization.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S2",
+          "step_number": "2",
+          "step_title": "Describing data analysis",
+          "description": "Explaining analytical techniques, statistical tests, thematic coding protocols, or qualitative analysis methods.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S3",
+          "step_number": "3",
+          "step_title": "Rationalizing data processing/analysis",
+          "description": "Providing justifications for chosen statistical models, inter-coder reliability measures, or validation strategies.",
+          "optional": false
+        }
+      ]
+    }
+  ]
+},
+{
+  "section": "Results",
+  "source": "Yang_Allison2003",
+  "citation": "Yang, R., & Allison, D. (2003). Research articles in applied linguistics: Moving from results to conclusions. English for Specific Purposes, 22(4), 365-385.",
+  "moves": [
+    {
+      "move_number": 1,
+      "move_id": "M1",
+      "move_title": "Preparatory information",
+      "steps": [
+        {
+          "step_id": "M1-S0",
+          "step_number": "0",
+          "step_title": "Preparatory information",
+          "description": "Functions as a reminder and connector between sections, providing relevant information as preparation for presenting results (e.g. methodological instruments or pointers to tables/graphs).",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 2,
+      "move_id": "M2",
+      "move_title": "Reporting results",
+      "steps": [
+        {
+          "step_id": "M2-S0",
+          "step_number": "0",
+          "step_title": "Reporting results",
+          "description": "The central Move in which results of a study are presented, normally accompanied by supporting empirical evidence such as statistics or examples.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 3,
+      "move_id": "M3",
+      "move_title": "Commenting on results",
+      "steps": [
+        {
+          "step_id": "M3-S1",
+          "step_number": "1",
+          "step_title": "Interpreting results",
+          "description": "Making a more general claim or interpretation arising from experimental results within the context of the study.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S2",
+          "step_number": "2",
+          "step_title": "Comparing results with literature",
+          "description": "Comparing findings with those reported in previous literature, showing consistency, support, or contrast.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S3",
+          "step_number": "3",
+          "step_title": "Evaluating results",
+          "description": "Commenting on the strength, limitations, reliability, or generalizability of specific findings.",
+          "optional": false
+        },
+        {
+          "step_id": "M3-S4",
+          "step_number": "4",
+          "step_title": "Accounting for results",
+          "description": "Suggesting underlying explanations or causes for surprising or unexpected findings.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 4,
+      "move_id": "M4",
+      "move_title": "Summarizing results",
+      "steps": [
+        {
+          "step_id": "M4-S0",
+          "step_number": "0",
+          "step_title": "Summarizing results",
+          "description": "Presenting integrated summaries based on multiple specific findings across the Results section.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 5,
+      "move_id": "M5",
+      "move_title": "Evaluating the study",
+      "steps": [
+        {
+          "step_id": "M5-S1",
+          "step_number": "1",
+          "step_title": "Indicating limitations",
+          "description": "Pointing out limitations of the overall study, dataset, or analytical framework.",
+          "optional": false
+        },
+        {
+          "step_id": "M5-S2",
+          "step_number": "2",
+          "step_title": "Indicating significance/advantage",
+          "description": "Highlighting novelty, practical value, or advantages of the study findings.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 6,
+      "move_id": "M6",
+      "move_title": "Deductions from the research",
+      "steps": [
+        {
+          "step_id": "M6-S0",
+          "step_number": "0",
+          "step_title": "Recommending further research",
+          "description": "Recommending future lines of investigation or applications arising from the research.",
+          "optional": false
+        }
+      ]
+    }
+  ]
+},
+{
+  "section": "Discussion",
+  "source": "Yang_Allison2003",
+  "citation": "Yang, R., & Allison, D. (2003). Research articles in applied linguistics: Moving from results to conclusions. English for Specific Purposes, 22(4), 365-385.",
+  "moves": [
+    {
+      "move_number": 1,
+      "move_id": "M1",
+      "move_title": "Background information",
+      "steps": [
+        {
+          "step_id": "M1-S0",
+          "step_number": "0",
+          "step_title": "Background information",
+          "description": "Recapitulating key research questions, aims, or theoretical contexts to contextualize the discussion.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 2,
+      "move_id": "M2",
+      "move_title": "Reporting results",
+      "steps": [
+        {
+          "step_id": "M2-S0",
+          "step_number": "0",
+          "step_title": "Reporting results",
+          "description": "Recalling central findings or specific results in the Discussion to serve as a foundation for commentary.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 3,
+      "move_id": "M3",
+      "move_title": "Summarizing results",
+      "steps": [
+        {
+          "step_id": "M3-S0",
+          "step_number": "0",
+          "step_title": "Summarizing results",
+          "description": "Synthesizing main experimental outcomes across multiple findings.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 4,
+      "move_id": "M4",
+      "move_title": "Commenting on results",
+      "steps": [
+        {
+          "step_id": "M4-S1",
+          "step_number": "1",
+          "step_title": "Interpreting results",
+          "description": "Formulating broader claims, inferences, or theoretical implications from the study results.",
+          "optional": false
+        },
+        {
+          "step_id": "M4-S2",
+          "step_number": "2",
+          "step_title": "Comparing results with literature",
+          "description": "Benchmarking findings against published studies to show agreement or divergence.",
+          "optional": false
+        },
+        {
+          "step_id": "M4-S3",
+          "step_number": "3",
+          "step_title": "Accounting for results",
+          "description": "Explaining underlying causes or factors contributing to observed outcomes.",
+          "optional": false
+        },
+        {
+          "step_id": "M4-S4",
+          "step_number": "4",
+          "step_title": "Evaluating results",
+          "description": "Assessing the robustness, validity, or generalizability of the findings.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 5,
+      "move_id": "M5",
+      "move_title": "Summarizing the study",
+      "steps": [
+        {
+          "step_id": "M5-S0",
+          "step_number": "0",
+          "step_title": "Summarizing the study",
+          "description": "Providing a high-level summary of the entire study and its main conclusions.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 6,
+      "move_id": "M6",
+      "move_title": "Evaluating the study",
+      "steps": [
+        {
+          "step_id": "M6-S1",
+          "step_number": "1",
+          "step_title": "Indicating limitations",
+          "description": "Stating constraints, boundary conditions, or limitations of the study.",
+          "optional": false
+        },
+        {
+          "step_id": "M6-S2",
+          "step_number": "2",
+          "step_title": "Indicating significance/advantage",
+          "description": "Emphasizing scientific contribution, novelty, or practical significance.",
+          "optional": false
+        },
+        {
+          "step_id": "M6-S3",
+          "step_number": "3",
+          "step_title": "Evaluating methodology",
+          "description": "Reflecting on the strengths or effectiveness of the research design and instruments.",
+          "optional": false
+        }
+      ]
+    },
+    {
+      "move_number": 7,
+      "move_id": "M7",
+      "move_title": "Deductions from the research",
+      "steps": [
+        {
+          "step_id": "M7-S1",
+          "step_number": "1",
+          "step_title": "Making suggestions",
+          "description": "Proposing practical, clinical, or methodological recommendations based on findings.",
+          "optional": false
+        },
+        {
+          "step_id": "M7-S2",
+          "step_number": "2",
+          "step_title": "Recommending further research",
+          "description": "Identifying specific questions or directions for future studies.",
+          "optional": false
+        },
+        {
+          "step_id": "M7-S3",
+          "step_number": "3",
+          "step_title": "Drawing pedagogic implication",
+          "description": "Outlining implications of research findings for teaching, training, or curriculum design.",
+          "optional": false
+        }
+      ]
+    }
+  ]
+}]

@@ -1,0 +1,9 @@
+sentence_id,label,text
+1,M1-S1,Discourse analysis is vital in EAP.
+2,M1-S2,Recent studies focus on move analysis.
+3,M1-S3,Swales (2004) proposed the CARS model.
+4,M2-S1B,"However, automated sequence visualization remains underexplored."
+5,M2-S1C,How can GenAI streamline move-step visualization?
+6,M3-S1A,This paper introduces MoveStepViz.
+7,M3-S2,We present a Python library and web tool.
+8,M3-S3,The remainder of this paper details the implementation.

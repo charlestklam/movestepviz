@@ -1,0 +1,2 @@
+recursive-include src/movestepviz/data *.json
+recursive-include src *.json
