@@ -1,4 +1,5 @@
 ---
+pagetitle: "Visualizing the DNA of Discourse | EuroCALL 2026"
 format:
   revealjs:
     theme: default
@@ -111,7 +112,7 @@ Previous studies (e.g., Swales, 1990; Cotos et al., 2017) have highlighted the r
 :::: {.columns}
 ::: {.column width="50%"}
 ### Multiple Sequence Alignment (MSA) in Bioinformatics
-![Multiple Sequence Alignment (https://en.wikipedia.org/wiki/Biological_data_visualization)](eurocall_slides_files/multiseqalign.png){width="95%"}
+![Multiple Sequence Alignment <https://en.wikipedia.org/wiki/Biological_data_visualization>](eurocall_slides_files/multiseqalign.png){width="95%"}
 
 * Aligns DNA/RNA/amino acid sequences into color-coded blocks.
 * Reveals patterns, mutations, and conservation across organisms, by comparing rows. 
